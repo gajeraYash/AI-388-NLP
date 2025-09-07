@@ -1,3 +1,8 @@
+# User configured ignore file for Git
+.DS_Store
+
+
+# Default Python.gitignore file
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
