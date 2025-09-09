@@ -1,0 +1,39 @@
+Namespace(model='PERCEPTRON', feats='UNIGRAM', train_path='data/train.txt', dev_path='data/dev.txt', blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True)
+6920 / 872 / 1821 train/dev/test examples
+=====Train Accuracy=====
+Accuracy: 6637 / 6920 = 0.959104
+Precision (fraction of predicted positives that are correct): 3440 / 3553 = 0.968196; Recall (fraction of true positives predicted correctly): 3440 / 3610 = 0.952909; F1 (harmonic mean of precision and recall): 0.960491
+=====Dev Accuracy=====
+Accuracy: 659 / 872 = 0.755734
+Precision (fraction of predicted positives that are correct): 336 / 441 = 0.761905; Recall (fraction of true positives predicted correctly): 336 / 444 = 0.756757; F1 (harmonic mean of precision and recall): 0.759322
+Time for training and evaluation: 0.26 seconds
+
+Namespace(model='LR', feats='UNIGRAM', train_path='data/train.txt', dev_path='data/dev.txt', blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True)
+6920 / 872 / 1821 train/dev/test examples
+=====Train Accuracy=====
+Accuracy: 6798 / 6920 = 0.982370
+Precision (fraction of predicted positives that are correct): 3577 / 3666 = 0.975723; Recall (fraction of true positives predicted correctly): 3577 / 3610 = 0.990859; F1 (harmonic mean of precision and recall): 0.983233
+=====Dev Accuracy=====
+Accuracy: 683 / 872 = 0.783257
+Precision (fraction of predicted positives that are correct): 364 / 473 = 0.769556; Recall (fraction of true positives predicted correctly): 364 / 444 = 0.819820; F1 (harmonic mean of precision and recall): 0.793893
+Time for training and evaluation: 1.86 seconds
+
+Namespace(model='LR', feats='BIGRAM', train_path='data/train.txt', dev_path='data/dev.txt', blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True)
+6920 / 872 / 1821 train/dev/test examples
+=====Train Accuracy=====
+Accuracy: 6919 / 6920 = 0.999855
+Precision (fraction of predicted positives that are correct): 3609 / 3609 = 1.000000; Recall (fraction of true positives predicted correctly): 3609 / 3610 = 0.999723; F1 (harmonic mean of precision and recall): 0.999861
+=====Dev Accuracy=====
+Accuracy: 485 / 872 = 0.556193
+Precision (fraction of predicted positives that are correct): 66 / 75 = 0.880000; Recall (fraction of true positives predicted correctly): 66 / 444 = 0.148649; F1 (harmonic mean of precision and recall): 0.254335
+Time for training and evaluation: 6.19 seconds
+
+Namespace(model='LR', feats='BETTER', train_path='data/train.txt', dev_path='data/dev.txt', blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True)
+6920 / 872 / 1821 train/dev/test examples
+=====Train Accuracy=====
+Accuracy: 6908 / 6920 = 0.998266
+Precision (fraction of predicted positives that are correct): 3604 / 3610 = 0.998338; Recall (fraction of true positives predicted correctly): 3604 / 3610 = 0.998338; F1 (harmonic mean of precision and recall): 0.998338
+=====Dev Accuracy=====
+Accuracy: 689 / 872 = 0.790138
+Precision (fraction of predicted positives that are correct): 352 / 443 = 0.794582; Recall (fraction of true positives predicted correctly): 352 / 444 = 0.792793; F1 (harmonic mean of precision and recall): 0.793687
+Time for training and evaluation: 7.58 seconds

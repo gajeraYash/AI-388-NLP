@@ -6,8 +6,6 @@ from collections import Counter
 import numpy as np
 import nltk
 from nltk.corpus import stopwords
-import sys
-
 np.random.seed(2025)
 
 # Helper functions
@@ -90,8 +88,8 @@ class BigramFeatureExtractor(FeatureExtractor):
     def extract_features(self, sentence: List[str], add_to_indexer: bool=False) -> Counter:
         feature_vector = Counter()
         # Extract bigram features: indicators for adjacent pairs
-        for w1, w2 in zip(sentence, sentence[1:]):
-            bigram = (w1.lower(), w2.lower())
+        for word1, word2 in zip(sentence, sentence[1:]):
+            bigram = (word1.lower(), word2.lower())
             if add_to_indexer:
                 idx = self.indexer.add_and_get_index(bigram)
             else:
@@ -105,7 +103,106 @@ class BetterFeatureExtractor(FeatureExtractor):
     Better feature extractor...try whatever you can think of!
     """
     def __init__(self, indexer: Indexer):
-        raise Exception("Must be implemented")
+        self.indexer = indexer
+        self.stop_words = set(stopwords.words('english'))
+        self.size = len(indexer)
+        self.rare_words = set()
+        self.idf = {}
+
+    def get_indexer(self):
+        return self.indexer
+
+    def get_size(self):
+        return self.size
+
+    def _compute_idf(self, num_docs, doc_freq):
+        return np.log((1 + num_docs) / (1 + doc_freq)) + 1
+
+    def build_stats(self, train_exs, min_freq=2):
+        # Build set of rare words and compute IDF for tf-idf
+        word_counter = Counter()
+        bigram_counter = Counter()
+        trigram_counter = Counter()
+        word_doc_counter = Counter()
+        bigram_doc_counter = Counter()
+        trigram_doc_counter = Counter()
+        num_docs = len(train_exs)
+        for example in train_exs:
+            words_in_doc = set()
+            bigrams_in_doc = set()
+            trigrams_in_doc = set()
+            sentence = example.words
+            for word in sentence:
+                word_lc = word.lower()
+                if word_lc not in self.stop_words:
+                    word_counter[word_lc] += 1
+                    words_in_doc.add(word_lc)
+            for i in range(len(sentence) - 1):
+                w1 = sentence[i].lower()
+                w2 = sentence[i+1].lower()
+                if w1 not in self.stop_words and w2 not in self.stop_words:
+                    bigram = (w1, w2)
+                    bigram_counter[bigram] += 1
+                    bigrams_in_doc.add(bigram)
+            for i in range(len(sentence) - 2):
+                w1 = sentence[i].lower()
+                w2 = sentence[i+1].lower()
+                w3 = sentence[i+2].lower()
+                if w1 not in self.stop_words and w2 not in self.stop_words and w3 not in self.stop_words:
+                    trigram = (w1, w2, w3)
+                    trigram_counter[trigram] += 1
+                    trigrams_in_doc.add(trigram)
+            for w in words_in_doc:
+                word_doc_counter[w] += 1
+            for b in bigrams_in_doc:
+                bigram_doc_counter[b] += 1
+            for t in trigrams_in_doc:
+                trigram_doc_counter[t] += 1
+        self.rare_words = set([w for w, c in word_counter.items() if c < min_freq])
+        # Compute IDF for words, bigrams, trigrams
+        self.idf = {}
+        for w in word_doc_counter:
+                self.idf[('uni', w)] = self._compute_idf(num_docs, word_doc_counter[w])
+        for b in bigram_doc_counter:
+                self.idf[('bi', b)] = self._compute_idf(num_docs, bigram_doc_counter[b])
+        for t in trigram_doc_counter:
+                self.idf[('tri', t)] = self._compute_idf(num_docs, trigram_doc_counter[t])
+
+    def extract_features(self, sentence: List[str], add_to_indexer: bool=False) -> Counter:
+        feature_vector = Counter()
+        term_freq = Counter()
+        # Unigram term frequency
+        for word in sentence:
+            word_lc = word.lower()
+            if word_lc in self.stop_words or word_lc in self.rare_words:
+                continue
+            term_freq[('uni', word_lc)] += 1
+        # Bigram term frequency
+        for i in range(len(sentence) - 1):
+            w1 = sentence[i].lower()
+            w2 = sentence[i+1].lower()
+            if w1 in self.stop_words or w2 in self.stop_words or w1 in self.rare_words or w2 in self.rare_words:
+                continue
+            bigram = (w1, w2)
+            term_freq[('bi', bigram)] += 1
+        # Trigram term frequency
+        for i in range(len(sentence) - 2):
+            w1 = sentence[i].lower()
+            w2 = sentence[i+1].lower()
+            w3 = sentence[i+2].lower()
+            if w1 in self.stop_words or w2 in self.stop_words or w3 in self.stop_words or w1 in self.rare_words or w2 in self.rare_words or w3 in self.rare_words:
+                continue
+            trigram = (w1, w2, w3)
+            term_freq[('tri', trigram)] += 1
+        # Apply tf-idf weighting and clip frequency at 3
+        for feature, freq in term_freq.items():
+            if add_to_indexer:
+                feature_index = self.indexer.add_and_get_index(feature)
+            else:
+                feature_index = self.indexer.index_of(feature)
+            idf_val = self.idf.get(feature, 1.0)
+            feature_vector[feature_index] = min(freq, 3) * idf_val
+        return feature_vector
 
 
 class SentimentClassifier(object):
@@ -223,8 +320,8 @@ def train_logistic_regression(train_exs: List[SentimentExample], dev_exs: List[S
             error = example.label - probability
             logistic_model.weights += learning_rate * error * feature_array
         # Compute dev set accuracy after each epoch
-        dev_acc = compute_accuracy(logistic_model, dev_exs)
-        print(f"Epoch {epoch+1}: Dev Accuracy = {dev_acc:.4f}")
+        # dev_acc = compute_accuracy(logistic_model, dev_exs)
+        # print(f"Epoch {epoch+1}: Dev Accuracy = {dev_acc:.4f}")
     return logistic_model
 
 
