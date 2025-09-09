@@ -1,0 +1,49 @@
+Total Points
+- / 100 pts
+
+Autograder Score
+100.0 / 100.0
+Passed Tests
+model = perceptron, feature = unigram (40/40)
+model = lr, feature = unigram (30/30)
+model = lr, feature = bigram (15/15)
+model = lr, feature = better (15/15)
+
+
+Training/Evaluating models and features. The dev accuracy for each case is displayed below.
+
+model = perceptron, feature = unigram (40/40)
+Training with Model = PERCEPTRON 	Features = UNIGRAM 
+=====Dev Accuracy=====
+Accuracy: 659 / 872 = 0.755734
+Precision (fraction of predicted positives that are correct): 336 / 441 = 0.761905
+; Recall (fraction of true positives predicted correctly): 336 / 444 = 0.756757
+; F1 (harmonic mean of precision and recall): 0.759322
+Time for training and evaluation: 0.50 seconds
+ 
+model = lr, feature = unigram (30/30)
+Training with Model = LR 	Features = UNIGRAM 
+=====Dev Accuracy=====
+Accuracy: 678 / 872 = 0.777523
+Precision (fraction of predicted positives that are correct): 345 / 440 = 0.784091
+; Recall (fraction of true positives predicted correctly): 345 / 444 = 0.777027
+; F1 (harmonic mean of precision and recall): 0.780543
+Time for training and evaluation: 6.80 seconds
+ 
+model = lr, feature = bigram (15/15)
+Training with Model = LR 	Features = BIGRAM 
+=====Dev Accuracy=====
+Accuracy: 535 / 872 = 0.613532
+Precision (fraction of predicted positives that are correct): 422 / 737 = 0.572592
+; Recall (fraction of true positives predicted correctly): 422 / 444 = 0.950450
+; F1 (harmonic mean of precision and recall): 0.714649
+Time for training and evaluation: 71.06 seconds
+ 
+model = lr, feature = better (15/15)
+Training with Model = LR 	Features = BETTER 
+=====Dev Accuracy=====
+Accuracy: 674 / 872 = 0.772936
+Precision (fraction of predicted positives that are correct): 358 / 470 = 0.761702
+; Recall (fraction of true positives predicted correctly): 358 / 444 = 0.806306
+; F1 (harmonic mean of precision and recall): 0.783370
+Time for training and evaluation: 53.66 seconds
