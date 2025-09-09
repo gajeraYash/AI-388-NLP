@@ -6,9 +6,11 @@ from collections import Counter
 import numpy as np
 import nltk
 from nltk.corpus import stopwords
+import sys
+
 np.random.seed(2025)
 
-# Helper function to compute accuracy
+# Helper functions
 def compute_accuracy(model, examples):
     correct = 0
     for ex in examples:
@@ -16,6 +18,9 @@ def compute_accuracy(model, examples):
         if pred == ex.label:
             correct += 1
     return correct / len(examples) if examples else 0.0
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
 class FeatureExtractor(object):
     """
@@ -73,7 +78,26 @@ class BigramFeatureExtractor(FeatureExtractor):
     Bigram feature extractor analogous to the unigram one.
     """
     def __init__(self, indexer: Indexer):
-        raise Exception("Must be implemented")
+        self.indexer = indexer
+        self.size = len(indexer)
+
+    def get_indexer(self):
+        return self.indexer
+
+    def get_size(self):
+        return self.size
+
+    def extract_features(self, sentence: List[str], add_to_indexer: bool=False) -> Counter:
+        feature_vector = Counter()
+        # Extract bigram features: indicators for adjacent pairs
+        for w1, w2 in zip(sentence, sentence[1:]):
+            bigram = (w1.lower(), w2.lower())
+            if add_to_indexer:
+                idx = self.indexer.add_and_get_index(bigram)
+            else:
+                idx = self.indexer.index_of(bigram)
+            feature_vector[idx] += 1
+        return feature_vector
 
 
 class BetterFeatureExtractor(FeatureExtractor):
@@ -111,17 +135,15 @@ class PerceptronClassifier(SentimentClassifier):
     modify the constructor to pass these in.
     """
     def __init__(self, feat_extractor: FeatureExtractor):
-        self.indexer = feat_extractor.get_indexer()
         self.feat_extractor = feat_extractor
         self.weights = Counter()
 
     def predict(self, sentence: List[str]) -> int:
         feature_vector = self.feat_extractor.extract_features(sentence, add_to_indexer=False)
         score = 0
-        for feature, count in feature_vector.items():
-            if feature in self.weights:
-                score += self.weights[feature] * count
-
+        for feature_index, feature_value in feature_vector.items():
+            if feature_index in self.weights:
+                score += self.weights[feature_index] * feature_value
         return int(score >= 0)
 
 
@@ -131,14 +153,26 @@ class LogisticRegressionClassifier(SentimentClassifier):
     superclass. Hint: you'll probably need this class to wrap both the weight vector and featurizer -- feel free to
     modify the constructor to pass these in.
     """
-    def __init__(self):
-        raise Exception("Must be implemented")
+    def __init__(self, feat_extractor: FeatureExtractor):
+        self.feat_extractor = feat_extractor
+        self.weights = np.zeros(len(feat_extractor.get_indexer()))
+
+    def predict(self, sentence: List[str]) -> int:
+        feats = self.feat_extractor.extract_features(sentence, add_to_indexer=False)
+        # Convert sparse Counter to dense numpy array
+        x = np.zeros_like(self.weights)
+        for idx, value in feats.items():
+            x[idx] = value
+        score = np.dot(self.weights, x)
+        probability = sigmoid(score)
+        return int(probability >= 0.5)
 
 
-def train_perceptron(train_exs: List[SentimentExample], feat_extractor: FeatureExtractor) -> PerceptronClassifier:
+def train_perceptron(train_exs: List[SentimentExample], dev_exs: List[SentimentExample], feat_extractor: FeatureExtractor) -> PerceptronClassifier:
     """
     Train a classifier with the perceptron.
     :param train_exs: training set, List of SentimentExample objects
+    :param dev_exs: development set, List of SentimentExample objects
     :param feat_extractor: feature extractor to use
     :return: trained PerceptronClassifier model
     """
@@ -149,28 +183,49 @@ def train_perceptron(train_exs: List[SentimentExample], feat_extractor: FeatureE
         for example in train_exs:
             feature_vector = feat_extractor.extract_features(example.words, add_to_indexer=True)
             score = 0
-            for feature, feature_count in feature_vector.items():
-                if feature in perceptron_model.weights:
-                    score += perceptron_model.weights[feature] * feature_count
+            for feature_index, feature_value in feature_vector.items():
+                if feature_index in perceptron_model.weights:
+                    score += perceptron_model.weights[feature_index] * feature_value
             predicted_label = int(score >= 0)
-            for feature, feature_count in feature_vector.items():
-                weight_update = (example.label - predicted_label) * feature_count
-                perceptron_model.weights[feature] += weight_update
+            for feature_index, feature_value in feature_vector.items():
+                weight_update = (example.label - predicted_label) * feature_value
+                perceptron_model.weights[feature_index] += weight_update
         # Compute and print training accuracy after each epoch
-        # train_acc = compute_accuracy(perceptron_model, train_exs)
-        # print(f"Epoch {epoch+1}: Training accuracy = {train_acc:.4f}")
+        # dev_acc = compute_accuracy(perceptron_model, dev_exs)
+        # print(f"Epoch {epoch+1}: Dev Accuracy = {dev_acc:.4f}")
     return perceptron_model
 
 
 
-def train_logistic_regression(train_exs: List[SentimentExample], feat_extractor: FeatureExtractor) -> LogisticRegressionClassifier:
+def train_logistic_regression(train_exs: List[SentimentExample], dev_exs: List[SentimentExample], feat_extractor: FeatureExtractor) -> LogisticRegressionClassifier:
     """
     Train a logistic regression model.
     :param train_exs: training set, List of SentimentExample objects
     :param feat_extractor: feature extractor to use
     :return: trained LogisticRegressionClassifier model
     """
-    raise Exception("Must be implemented")
+    # Build feature space once before training
+    for example in train_exs:
+        feat_extractor.extract_features(example.words, add_to_indexer=True)
+
+    logistic_model = LogisticRegressionClassifier(feat_extractor)
+    learning_rate = 0.1
+    num_epochs = 14
+    for epoch in range(num_epochs):
+        np.random.shuffle(train_exs)
+        for example in train_exs:
+            feature_vector = feat_extractor.extract_features(example.words, add_to_indexer=False)
+            feature_array = np.zeros_like(logistic_model.weights)
+            for feature_index, feature_value in feature_vector.items():
+                feature_array[feature_index] = feature_value
+            score = np.dot(logistic_model.weights, feature_array)
+            probability = sigmoid(score)
+            error = example.label - probability
+            logistic_model.weights += learning_rate * error * feature_array
+        # Compute dev set accuracy after each epoch
+        dev_acc = compute_accuracy(logistic_model, dev_exs)
+        print(f"Epoch {epoch+1}: Dev Accuracy = {dev_acc:.4f}")
+    return logistic_model
 
 
 def train_model(args, train_exs: List[SentimentExample], dev_exs: List[SentimentExample]) -> SentimentClassifier:
@@ -202,9 +257,9 @@ def train_model(args, train_exs: List[SentimentExample], dev_exs: List[Sentiment
     if args.model == "TRIVIAL":
         model = TrivialSentimentClassifier()
     elif args.model == "PERCEPTRON":
-        model = train_perceptron(train_exs, feat_extractor)
+        model = train_perceptron(train_exs, dev_exs, feat_extractor)
     elif args.model == "LR":
-        model = train_logistic_regression(train_exs, feat_extractor)
+        model = train_logistic_regression(train_exs, dev_exs, feat_extractor)
     else:
         raise Exception("Pass in TRIVIAL, PERCEPTRON, or LR to run the appropriate system")
     return model
