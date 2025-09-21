@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # PART 1B:
 OPTIMAL_STEP_SIZE = 0.12  # Largest stable step size is 0.125
 
-# Optional: Find the tipping point for divergence
+# Optional:
 def find_tipping_point():
     print("\nExploring step size tipping point...")
     step_sizes = np.arange(0.10, 0.15, 0.005)
