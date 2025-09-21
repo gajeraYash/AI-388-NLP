@@ -5,10 +5,27 @@ import numpy as np
 import scipy.special
 import matplotlib.pyplot as plt
 
-### 
-# IMPLEMENT ME! REPLACE WITH YOUR ANSWER TO PART 1B
-OPTIMAL_STEP_SIZE = 1.0
-###
+
+# PART 1B:
+OPTIMAL_STEP_SIZE = 0.12  # Largest stable step size is 0.125
+
+# Optional: Find the tipping point for divergence
+def find_tipping_point():
+    print("\nExploring step size tipping point...")
+    step_sizes = np.arange(0.10, 0.15, 0.005)
+    for lr in step_sizes:
+        curr_point = np.array([0., 0.])
+        diverged = False
+        for _ in range(50):
+            grad = quadratic_grad(curr_point[0], curr_point[1])
+            curr_point = curr_point - lr * grad
+            # If point goes far from optimum, consider it diverged
+            if np.linalg.norm(curr_point - np.array([1., 1.])) > 10:
+                diverged = True
+                break
+        dist = np.linalg.norm(curr_point - np.array([1., 1.]))
+        status = "DIVERGED" if diverged else f"Converged (dist={dist:.3f})"
+        print(f"Step size {lr:.3f}: {status}")
 
 def _parse_args():
     """
@@ -41,7 +58,9 @@ def quadratic_grad(x1, x2):
     :param x2: second coordinate
     :return: a one-dimensional numpy array containing two elements representing the gradient
     """
-    raise Exception("Implement me!")
+    grad_x1 = 2 * (x1 - 1)
+    grad_x2 = 16 * (x2 - 1)
+    return np.array([grad_x1, grad_x2])
 
 
 def sgd_test_quadratic(args):
@@ -76,3 +95,5 @@ def sgd_test_quadratic(args):
 if __name__ == '__main__':
     args = _parse_args()
     sgd_test_quadratic(args)
+    # Uncomment below to run optional tipping point exploration
+    # find_tipping_point()
