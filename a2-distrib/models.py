@@ -5,9 +5,41 @@ import torch.nn as nn
 from torch import optim
 import numpy as np
 import random
+from typing import List
 from sentiment_data import *
 
+# Set random seeds for repeatability
+random.seed(2025)
+np.random.seed(2025)
+torch.manual_seed(2025)
 
+# =====================
+# Global Hyperparameters
+# =====================
+DEFAULT_HIDDEN_SIZE = 256 # 100
+DEFAULT_EPOCHS = 10 # 10
+DEFAULT_LR = 1e-3 # 0.001
+DEFAULT_BATCH_SIZE = 128 # 1
+
+class DAN(nn.Module):
+    def __init__(self, embedding_size, hidden_layer_size, output_size):
+        """
+        Constructs the computation graph by instantiating the various layers and initializing weights.
+
+        :param embedding_size: size of input (integer)
+        :param hidden_layer_size: size of hidden layer (integer)
+        :param output_size: size of output (integer), which should be the number of classes
+        """
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(embedding_size, hidden_layer_size, dtype=torch.float64),
+            nn.ReLU(),
+            nn.Linear(hidden_layer_size, output_size, dtype=torch.float64),
+            nn.LogSoftmax(dim=-1)
+        )
+
+    def forward(self, x):
+        return self.net(x)
 class SentimentClassifier(object):
     """
     Sentiment classifier base type
@@ -52,8 +84,49 @@ class NeuralSentimentClassifier(SentimentClassifier):
     method and you can optionally override predict_all if you want to use batching at inference time (not necessary,
     but may make things faster!)
     """
-    def __init__(self):
-        raise NotImplementedError
+    def __init__(self, dan_model, word_embeddings, device: str | None = None):
+        self.model = dan_model
+        if device is None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model.eval()
+        self.model.to(device)
+        self.word_embeddings = word_embeddings
+        self.device = device
+
+    def predict(self, ex_words: List[str], has_typos: bool) -> int:
+        # Average the embeddings for all words in the example
+        if len(ex_words) == 0:
+            avg_vec = np.zeros(self.word_embeddings.get_embedding_length())
+        else:
+            word_vecs = np.array([self.word_embeddings.get_embedding(w) for w in ex_words])
+            avg_vec = np.mean(word_vecs, axis=0)
+
+        model_dtype = next(self.model.parameters()).dtype
+        x = torch.tensor(avg_vec, dtype=model_dtype).to(self.device)
+        with torch.no_grad():
+            out = self.model(x)
+            return out.argmax(dim=0).item()
+
+    def predict_all(self, all_ex_words: List[List[str]], has_typos: bool) -> List[int]:
+        preds: List[int] = []
+        embedding_size = self.word_embeddings.get_embedding_length()
+        model_dtype = next(self.model.parameters()).dtype
+        for i in range(0, len(all_ex_words), DEFAULT_BATCH_SIZE):
+            batch_sents = all_ex_words[i:i+DEFAULT_BATCH_SIZE]
+            batch_vecs = []
+            for words in batch_sents:
+                if len(words) == 0:
+                    avg_vec = np.zeros(embedding_size)
+                else:
+                    word_vecs = np.array([self.word_embeddings.get_embedding(w) for w in words])
+                    avg_vec = np.mean(word_vecs, axis=0)
+                batch_vecs.append(avg_vec)
+            X = torch.tensor(np.stack(batch_vecs, axis=0), dtype=model_dtype).to(self.device)
+            with torch.no_grad():
+                out = self.model(X)  # (B, C)
+                batch_preds = out.argmax(dim=1).tolist()
+                preds.extend(batch_preds)
+        return preds
 
 
 def train_deep_averaging_network(args, train_exs: List[SentimentExample], dev_exs: List[SentimentExample],
@@ -68,5 +141,44 @@ def train_deep_averaging_network(args, train_exs: List[SentimentExample], dev_ex
     and return an instance of that for the typo setting if you want; you're allowed to return two different model types
     for the two settings.
     """
-    raise NotImplementedError
+    # Simple hyperparameters
+    embedding_size = word_embeddings.get_embedding_length()
+    output_size = 2  # binary sentiment
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    # Model, optimizer, loss
+    model = DAN(embedding_size, DEFAULT_HIDDEN_SIZE, output_size).to(device)
+    optimizer = optim.Adam(model.parameters(), lr=DEFAULT_LR)
+    criterion = nn.CrossEntropyLoss()
+
+    model_dtype = next(model.parameters()).dtype
+
+    # Train with mini-batches over averaged embeddings
+    for _ in range(DEFAULT_EPOCHS):
+        random.shuffle(train_exs)
+        for i in range(0, len(train_exs), DEFAULT_BATCH_SIZE):
+            batch = train_exs[i:i+DEFAULT_BATCH_SIZE]
+            batch_vecs = []
+            batch_labels = []
+            for ex in batch:
+                if len(ex.words) == 0:
+                    avg_vec = np.zeros(embedding_size)
+                else:
+                    word_vecs = np.array([word_embeddings.get_embedding(w) for w in ex.words])
+                    avg_vec = np.mean(word_vecs, axis=0)
+                batch_vecs.append(avg_vec)
+                batch_labels.append(ex.label)
+
+            X = torch.tensor(np.stack(batch_vecs, axis=0), dtype=model_dtype).to(device)
+            y = torch.tensor(batch_labels, dtype=torch.long).to(device)
+
+            model.train()
+            optimizer.zero_grad()
+            out = model(X)
+            loss = criterion(out, y)
+            loss.backward()
+            optimizer.step()
+
+    # Wrap in classifier for inference
+    return NeuralSentimentClassifier(model, word_embeddings, device)
 
