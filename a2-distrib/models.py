@@ -15,7 +15,7 @@ np.random.seed(2025)
 torch.manual_seed(2025)
 
 # Global Hyperparameters
-DEFAULT_HIDDEN_SIZE = 100 # 100
+DEFAULT_HIDDEN_SIZE = 300 # 100
 DEFAULT_EPOCHS = 10 # 10
 DEFAULT_LR = 1e-3 # 0.001
 DEFAULT_BATCH_SIZE = 128 # 1

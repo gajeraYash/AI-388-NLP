@@ -128,7 +128,7 @@ Time for training and evaluation: 0.00 seconds
   "dev_f1": 0.6747720364741641,
   "dev_typo_acc": -1,
   "dev_typo_f1": -1,
-  "execution_time": 0.0016660690307617188,
+  "execution_time": 0.0019450187683105469,
   "output": "Accuracy: 444 / 872 = 0.509174;\nPrecision (fraction of predicted positives that are correct): 444 / 872 = 0.509174;\nRecall (fraction of true positives predicted correctly): 444 / 444 = 1.000000;\nF1 (harmonic mean of precision and recall): 0.674772;\n",
   "typo_output": "Typo setting not evaluated"
 }
@@ -152,14 +152,14 @@ Precision (fraction of predicted positives that are correct): 368 / 477 = 0.7714
 Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
 F1 (harmonic mean of precision and recall): 0.799131;
 
-Time for training and evaluation: 2.31 seconds
+Time for training and evaluation: 2.66 seconds
 =====Results=====
 {
   "dev_acc": 0.7878440366972477,
   "dev_f1": 0.7991313789359391,
   "dev_typo_acc": -1,
   "dev_typo_f1": -1,
-  "execution_time": 2.3087317943573,
+  "execution_time": 2.662024974822998,
   "output": "Accuracy: 687 / 872 = 0.787844;\nPrecision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.799131;\n",
   "typo_output": "Typo setting not evaluated"
 }
@@ -183,23 +183,23 @@ Precision (fraction of predicted positives that are correct): 368 / 477 = 0.7714
 Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
 F1 (harmonic mean of precision and recall): 0.799131;
 
-Time for training and evaluation: 2.16 seconds
+Time for training and evaluation: 2.36 seconds
 =====Dev Misspelling Accuracy=====
-Accuracy: 647 / 872 = 0.741972;
-Precision (fraction of predicted positives that are correct): 368 / 517 = 0.711799;
-Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
-F1 (harmonic mean of precision and recall): 0.765869;
+Accuracy: 657 / 872 = 0.753440;
+Precision (fraction of predicted positives that are correct): 355 / 481 = 0.738046;
+Recall (fraction of true positives predicted correctly): 355 / 444 = 0.799550;
+F1 (harmonic mean of precision and recall): 0.767568;
 
-Time for typo evaluation: 0.33 seconds
+Time for typo evaluation: 0.35 seconds
 =====Results=====
 {
   "dev_acc": 0.7878440366972477,
   "dev_f1": 0.7991313789359391,
-  "dev_typo_acc": 0.7419724770642202,
-  "dev_typo_f1": 0.7658688865764829,
-  "execution_time": 2.161494016647339,
+  "dev_typo_acc": 0.7534403669724771,
+  "dev_typo_f1": 0.7675675675675676,
+  "execution_time": 2.359055995941162,
   "output": "Accuracy: 687 / 872 = 0.787844;\nPrecision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.799131;\n",
-  "typo_output": "Accuracy: 647 / 872 = 0.741972;\nPrecision (fraction of predicted positives that are correct): 368 / 517 = 0.711799;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.765869;\n"
+  "typo_output": "Accuracy: 657 / 872 = 0.753440;\nPrecision (fraction of predicted positives that are correct): 355 / 481 = 0.738046;\nRecall (fraction of true positives predicted correctly): 355 / 444 = 0.799550;\nF1 (harmonic mean of precision and recall): 0.767568;\n"
 }
 
 --------------------------------------------------------------------

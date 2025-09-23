@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 # PART 1B:
-OPTIMAL_STEP_SIZE = 0.12  # Largest stable step size is 0.125
+OPTIMAL_STEP_SIZE = 0.11  # Largest stable step size is 0.125
 
 # Optional:
 def find_tipping_point():
@@ -61,6 +61,7 @@ def quadratic_grad(x1, x2):
     grad_x1 = 2 * (x1 - 1)
     grad_x2 = 16 * (x2 - 1)
     return np.array([grad_x1, grad_x2])
+
 
 
 def sgd_test_quadratic(args):
