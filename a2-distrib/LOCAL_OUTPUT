@@ -1,0 +1,206 @@
+
+CMD: python optimization.py
+
+Point after epoch 0: array([ 2., 16.])
+Point after epoch 1: array([   0., -224.])
+Point after epoch 2: array([2.000e+00, 3.376e+03])
+Point after epoch 3: array([     0., -50624.])
+Point after epoch 4: array([2.00000e+00, 7.59376e+05])
+Point after epoch 5: array([        0., -11390624.])
+Point after epoch 6: array([2.00000000e+00, 1.70859376e+08])
+Point after epoch 7: array([ 0.00000000e+00, -2.56289062e+09])
+Point after epoch 8: array([2.00000000e+00, 3.84433594e+10])
+Point after epoch 9: array([ 0.00000000e+00, -5.76650391e+11])
+Point after epoch 10: array([2.00000000e+00, 8.64975586e+12])
+Point after epoch 11: array([ 0.00000000e+00, -1.29746338e+14])
+Point after epoch 12: array([2.00000000e+00, 1.94619507e+15])
+Point after epoch 13: array([ 0.0000000e+00, -2.9192926e+16])
+Point after epoch 14: array([2.0000000e+00, 4.3789389e+17])
+Point after epoch 15: array([ 0.00000000e+00, -6.56840836e+18])
+Point after epoch 16: array([2.00000000e+00, 9.85261253e+19])
+Point after epoch 17: array([ 0.00000000e+00, -1.47789188e+21])
+Point after epoch 18: array([2.00000000e+00, 2.21683782e+22])
+Point after epoch 19: array([ 0.00000000e+00, -3.32525673e+23])
+Point after epoch 20: array([2.0000000e+00, 4.9878851e+24])
+Point after epoch 21: array([ 0.00000000e+00, -7.48182764e+25])
+Point after epoch 22: array([2.00000000e+00, 1.12227415e+27])
+Point after epoch 23: array([ 0.00000000e+00, -1.68341122e+28])
+Point after epoch 24: array([2.00000000e+00, 2.52511683e+29])
+Point after epoch 25: array([ 0.00000000e+00, -3.78767524e+30])
+Point after epoch 26: array([2.00000000e+00, 5.68151287e+31])
+Point after epoch 27: array([ 0.0000000e+00, -8.5222693e+32])
+Point after epoch 28: array([2.00000000e+00, 1.27834039e+34])
+Point after epoch 29: array([ 0.00000000e+00, -1.91751059e+35])
+Point after epoch 30: array([2.00000000e+00, 2.87626589e+36])
+Point after epoch 31: array([ 0.00000000e+00, -4.31439883e+37])
+Point after epoch 32: array([2.00000000e+00, 6.47159825e+38])
+Point after epoch 33: array([ 0.00000000e+00, -9.70739737e+39])
+Point after epoch 34: array([2.00000000e+00, 1.45610961e+41])
+Point after epoch 35: array([ 0.00000000e+00, -2.18416441e+42])
+Point after epoch 36: array([2.00000000e+00, 3.27624661e+43])
+Point after epoch 37: array([ 0.00000000e+00, -4.91436992e+44])
+Point after epoch 38: array([2.00000000e+00, 7.37155488e+45])
+Point after epoch 39: array([ 0.00000000e+00, -1.10573323e+47])
+Point after epoch 40: array([2.00000000e+00, 1.65859985e+48])
+Point after epoch 41: array([ 0.00000000e+00, -2.48789977e+49])
+Point after epoch 42: array([2.00000000e+00, 3.73184966e+50])
+Point after epoch 43: array([ 0.00000000e+00, -5.59777449e+51])
+Point after epoch 44: array([2.00000000e+00, 8.39666173e+52])
+Point after epoch 45: array([ 0.00000000e+00, -1.25949926e+54])
+Point after epoch 46: array([2.00000000e+00, 1.88924889e+55])
+Point after epoch 47: array([ 0.00000000e+00, -2.83387333e+56])
+Point after epoch 48: array([2.00000e+00, 4.25081e+57])
+Point after epoch 49: array([ 0.000000e+00, -6.376215e+58])
+Point after epoch 50: array([2.0000000e+00, 9.5643225e+59])
+Point after epoch 51: array([ 0.00000000e+00, -1.43464838e+61])
+Point after epoch 52: array([2.00000000e+00, 2.15197256e+62])
+Point after epoch 53: array([ 0.00000000e+00, -3.22795884e+63])
+Point after epoch 54: array([2.00000000e+00, 4.84193827e+64])
+Point after epoch 55: array([ 0.0000000e+00, -7.2629074e+65])
+Point after epoch 56: array([2.00000000e+00, 1.08943611e+67])
+Point after epoch 57: array([ 0.00000000e+00, -1.63415417e+68])
+Point after epoch 58: array([2.00000000e+00, 2.45123125e+69])
+Point after epoch 59: array([ 0.00000000e+00, -3.67684687e+70])
+Point after epoch 60: array([2.00000000e+00, 5.51527031e+71])
+Point after epoch 61: array([ 0.00000000e+00, -8.27290546e+72])
+Point after epoch 62: array([2.00000000e+00, 1.24093582e+74])
+Point after epoch 63: array([ 0.00000000e+00, -1.86140373e+75])
+Point after epoch 64: array([2.00000000e+00, 2.79210559e+76])
+Point after epoch 65: array([ 0.00000000e+00, -4.18815839e+77])
+Point after epoch 66: array([2.00000000e+00, 6.28223758e+78])
+Point after epoch 67: array([ 0.00000000e+00, -9.42335638e+79])
+Point after epoch 68: array([2.00000000e+00, 1.41350346e+81])
+Point after epoch 69: array([ 0.00000000e+00, -2.12025518e+82])
+Point after epoch 70: array([2.00000000e+00, 3.18038278e+83])
+Point after epoch 71: array([ 0.00000000e+00, -4.77057417e+84])
+Point after epoch 72: array([2.00000000e+00, 7.15586125e+85])
+Point after epoch 73: array([ 0.00000000e+00, -1.07337919e+87])
+Point after epoch 74: array([2.00000000e+00, 1.61006878e+88])
+Point after epoch 75: array([ 0.00000000e+00, -2.41510317e+89])
+Point after epoch 76: array([2.00000000e+00, 3.62265476e+90])
+Point after epoch 77: array([ 0.00000000e+00, -5.43398214e+91])
+Point after epoch 78: array([2.0000000e+00, 8.1509732e+92])
+Point after epoch 79: array([ 0.00000000e+00, -1.22264598e+94])
+Point after epoch 80: array([2.00000000e+00, 1.83396897e+95])
+Point after epoch 81: array([ 0.00000000e+00, -2.75095346e+96])
+Point after epoch 82: array([2.00000000e+00, 4.12643018e+97])
+Point after epoch 83: array([ 0.00000000e+00, -6.18964528e+98])
+Point after epoch 84: array([2.00000000e+00, 9.28446791e+99])
+Point after epoch 85: array([ 0.00000000e+000, -1.39267019e+101])
+Point after epoch 86: array([2.00000000e+000, 2.08900528e+102])
+Point after epoch 87: array([ 0.00000000e+000, -3.13350792e+103])
+Point after epoch 88: array([2.00000000e+000, 4.70026188e+104])
+Point after epoch 89: array([ 0.00000000e+000, -7.05039282e+105])
+Point after epoch 90: array([2.00000000e+000, 1.05755892e+107])
+Point after epoch 91: array([ 0.00000000e+000, -1.58633839e+108])
+Point after epoch 92: array([2.00000000e+000, 2.37950758e+109])
+Point after epoch 93: array([ 0.00000000e+000, -3.56926137e+110])
+Point after epoch 94: array([2.00000000e+000, 5.35389205e+111])
+Point after epoch 95: array([ 0.00000000e+000, -8.03083807e+112])
+Point after epoch 96: array([2.00000000e+000, 1.20462571e+114])
+Point after epoch 97: array([ 0.00000000e+000, -1.80693857e+115])
+Point after epoch 98: array([2.00000000e+000, 2.71040785e+116])
+Point after epoch 99: array([ 0.00000000e+000, -4.06561178e+117])
+
+--------------------------------------------------------------------
+
+CMD: python neural_sentiment_classifier.py --model TRIVIAL --no_run_on_test
+
+Namespace(model='TRIVIAL', train_path='data/train.txt', dev_path='data/dev.txt', dev_typo_path='data/dev-typo.txt', use_typo_setting=False, blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=False, word_vecs_path='data/glove.6B.300d-relativized.txt', lr=0.001, num_epochs=10, hidden_size=100, batch_size=1)
+6920 / 872 / 1821 train/dev/test examples
+Read in 14923 vectors of size 300
+=====Train Accuracy=====
+Accuracy: 3610 / 6920 = 0.521676;
+Precision (fraction of predicted positives that are correct): 3610 / 6920 = 0.521676;
+Recall (fraction of true positives predicted correctly): 3610 / 3610 = 1.000000;
+F1 (harmonic mean of precision and recall): 0.685660;
+
+=====Dev Accuracy=====
+Accuracy: 444 / 872 = 0.509174;
+Precision (fraction of predicted positives that are correct): 444 / 872 = 0.509174;
+Recall (fraction of true positives predicted correctly): 444 / 444 = 1.000000;
+F1 (harmonic mean of precision and recall): 0.674772;
+
+Time for training and evaluation: 0.00 seconds
+=====Results=====
+{
+  "dev_acc": 0.5091743119266054,
+  "dev_f1": 0.6747720364741641,
+  "dev_typo_acc": -1,
+  "dev_typo_f1": -1,
+  "execution_time": 0.0016660690307617188,
+  "output": "Accuracy: 444 / 872 = 0.509174;\nPrecision (fraction of predicted positives that are correct): 444 / 872 = 0.509174;\nRecall (fraction of true positives predicted correctly): 444 / 444 = 1.000000;\nF1 (harmonic mean of precision and recall): 0.674772;\n",
+  "typo_output": "Typo setting not evaluated"
+}
+
+--------------------------------------------------------------------
+
+CMD: python neural_sentiment_classifier.py
+
+Namespace(model='DAN', train_path='data/train.txt', dev_path='data/dev.txt', dev_typo_path='data/dev-typo.txt', use_typo_setting=False, blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True, word_vecs_path='data/glove.6B.300d-relativized.txt', lr=0.001, num_epochs=10, hidden_size=100, batch_size=1)
+6920 / 872 / 1821 train/dev/test examples
+Read in 14923 vectors of size 300
+=====Train Accuracy=====
+Accuracy: 5616 / 6920 = 0.811561;
+Precision (fraction of predicted positives that are correct): 3030 / 3754 = 0.807139;
+Recall (fraction of true positives predicted correctly): 3030 / 3610 = 0.839335;
+F1 (harmonic mean of precision and recall): 0.822922;
+
+=====Dev Accuracy=====
+Accuracy: 687 / 872 = 0.787844;
+Precision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;
+Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
+F1 (harmonic mean of precision and recall): 0.799131;
+
+Time for training and evaluation: 2.31 seconds
+=====Results=====
+{
+  "dev_acc": 0.7878440366972477,
+  "dev_f1": 0.7991313789359391,
+  "dev_typo_acc": -1,
+  "dev_typo_f1": -1,
+  "execution_time": 2.3087317943573,
+  "output": "Accuracy: 687 / 872 = 0.787844;\nPrecision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.799131;\n",
+  "typo_output": "Typo setting not evaluated"
+}
+
+--------------------------------------------------------------------
+
+CMD: python neural_sentiment_classifier.py --use_typo_setting
+
+Namespace(model='DAN', train_path='data/train.txt', dev_path='data/dev.txt', dev_typo_path='data/dev-typo.txt', use_typo_setting=True, blind_test_path='data/test-blind.txt', test_output_path='test-blind.output.txt', run_on_test=True, word_vecs_path='data/glove.6B.300d-relativized.txt', lr=0.001, num_epochs=10, hidden_size=100, batch_size=1)
+6920 / 872 / 1821 train/dev/test examples
+Read in 14923 vectors of size 300
+=====Train Accuracy=====
+Accuracy: 5616 / 6920 = 0.811561;
+Precision (fraction of predicted positives that are correct): 3030 / 3754 = 0.807139;
+Recall (fraction of true positives predicted correctly): 3030 / 3610 = 0.839335;
+F1 (harmonic mean of precision and recall): 0.822922;
+
+=====Dev Accuracy=====
+Accuracy: 687 / 872 = 0.787844;
+Precision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;
+Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
+F1 (harmonic mean of precision and recall): 0.799131;
+
+Time for training and evaluation: 2.16 seconds
+=====Dev Misspelling Accuracy=====
+Accuracy: 647 / 872 = 0.741972;
+Precision (fraction of predicted positives that are correct): 368 / 517 = 0.711799;
+Recall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;
+F1 (harmonic mean of precision and recall): 0.765869;
+
+Time for typo evaluation: 0.33 seconds
+=====Results=====
+{
+  "dev_acc": 0.7878440366972477,
+  "dev_f1": 0.7991313789359391,
+  "dev_typo_acc": 0.7419724770642202,
+  "dev_typo_f1": 0.7658688865764829,
+  "execution_time": 2.161494016647339,
+  "output": "Accuracy: 687 / 872 = 0.787844;\nPrecision (fraction of predicted positives that are correct): 368 / 477 = 0.771488;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.799131;\n",
+  "typo_output": "Accuracy: 647 / 872 = 0.741972;\nPrecision (fraction of predicted positives that are correct): 368 / 517 = 0.711799;\nRecall (fraction of true positives predicted correctly): 368 / 444 = 0.828829;\nF1 (harmonic mean of precision and recall): 0.765869;\n"
+}
+
+--------------------------------------------------------------------
+
